@@ -1,0 +1,55 @@
+﻿<Page
+    x:Class="UWP_Sample1.View.AdaptiveShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWP_Sample1.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <RelativePanel Grid.Column="1">
+            <TextBlock x:Name="G1TitleTb" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleTextBlockStyle}" Text="Adaptive tile sample" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True"/>
+            <TextBlock x:Name="G1SubtitleTb" Style="{StaticResource SubheaderTextBlockStyle}" Text="Tile sample" RelativePanel.Below="G1TitleTb" RelativePanel.AlignLeftWithPanel="True"/>
+            <!--#region Group1-->
+            <TextBlock x:Name="Group1TextTb" Height="{Binding ActualHeight, ElementName=Group1Tbx, Mode=OneWay}" Text="Group 1 text value" RelativePanel.Below="G1SubtitleTb" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+            <TextBox x:Name="Group1Tbx" RelativePanel.RightOf="Group1TextTb" RelativePanel.Below="G1SubtitleTb" RelativePanel.AlignRightWithPanel="True"/>
+            <TextBlock x:Name="Group1ImagePathTb" Height="{Binding ActualHeight, ElementName=Group1Tbx, Mode=OneWay}" Text="Group 1 image path value" RelativePanel.Below="Group1TextTb"/>
+            <TextBox x:Name="Group1ImgTbx" RelativePanel.RightOf="Group1ImagePathTb" RelativePanel.Below="Group1TextTb" RelativePanel.AlignRightWithPanel="True"/>
+            <!--#endregion-->
+            <!--#region Group2-->
+            <TextBlock x:Name="Group2TextTb" Height="{Binding ActualHeight, ElementName=Group1Tbx, Mode=OneWay}" Text="Group 2 text value" RelativePanel.Below="Group1ImgTbx" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+            <TextBox x:Name="Group2Tbx" RelativePanel.RightOf="Group1TextTb" RelativePanel.Below="Group1ImgTbx" RelativePanel.AlignRightWithPanel="True"/>
+            <TextBlock x:Name="Group2ImagePathTb" Height="{Binding ActualHeight, ElementName=Group1Tbx, Mode=OneWay}" Text="Group 2 image path value" RelativePanel.Below="Group2Tbx"/>
+            <TextBox x:Name="Group2ImgTbx" RelativePanel.RightOf="Group2ImagePathTb" RelativePanel.Below="Group2Tbx" RelativePanel.AlignRightWithPanel="True"/>
+            <!--#endregion-->
+            <Button Content="Sent tile notification" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Click="Button_Click"/>
+        </RelativePanel>
+        <RelativePanel Grid.Column="3">
+            <TextBlock x:Name="G2TitleTb" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource TitleTextBlockStyle}" Text="Adaptive toast sample" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True"/>
+            <TextBlock x:Name="G2SubtitleTb" Style="{StaticResource SubheaderTextBlockStyle}" Text="Toast sample" RelativePanel.Below="G2TitleTb" RelativePanel.AlignLeftWithPanel="True"/>
+            <TextBlock x:Name="ToastInput" Text="toast input type" RelativePanel.Below="G2SubtitleTb" RelativePanel.AlignLeftWithPanel="True"/>
+            <ComboBox x:Name="ToastInputCbx" RelativePanel.Below="G2SubtitleTb" RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <ComboBoxItem>selection</ComboBoxItem>
+                <ComboBoxItem>text input</ComboBoxItem>
+            </ComboBox>
+            <ListView x:Name="ToastInputAsSelectLv" x:DeferLoadStrategy="Lazy" SelectionMode="None" IsItemClickEnabled="False" Visibility="Collapsed"/>
+            <Button x:Name="ToastInputAsSelectAddBtn" x:DeferLoadStrategy="Lazy" Content="Add selection" Visibility="Collapsed" Click="Button_Click"/>
+            <TextBox x:Name="ToastInputAsTextTbx" x:DeferLoadStrategy="Lazy" Visibility="Collapsed"/>
+            <TextBlock x:Name="ToastTitleTb" Height="{Binding ActualHeight, ElementName=ToastTitleTbx, Mode=OneWay}" Text="Toast title value" RelativePanel.Below="ToastInputCbx" RelativePanel.AlignVerticalCenterWithPanel="True"/>
+            <TextBox x:Name="ToastTitleTbx" RelativePanel.RightOf="ToastTitleTb" RelativePanel.Below="ToastInputCbx" RelativePanel.AlignRightWithPanel="True"/>
+            <TextBlock x:Name="ToastContentTb" Height="{Binding ActualHeight, ElementName=ToastContentTbx, Mode=OneWay}" Text="Toast content value" RelativePanel.Below="ToastTitleTb"/>
+            <TextBox x:Name="ToastContentTbx" RelativePanel.RightOf="ToastContentTb" RelativePanel.Below="ToastTitleTb" RelativePanel.AlignRightWithPanel="True"/>
+            <TextBlock x:Name="ToastImageTb" Height="{Binding ActualHeight, ElementName=ToastImageTbx, Mode=OneWay}" Text="Toast image path value" RelativePanel.Below="ToastContentTb"/>
+            <TextBox x:Name="ToastImageTbx" RelativePanel.RightOf="ToastImageTb" RelativePanel.Below="ToastContentTb" RelativePanel.AlignRightWithPanel="True"/>
+            <CheckBox x:Name="ActionButtonCbx" Content="Use action buttons" IsThreeState="False" RelativePanel.Below="ToastImageTbx"/>
+            <Button Content="Sent toast notification" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" Click="Button_Click"/>
+        </RelativePanel>
+    </Grid>
+</Page>

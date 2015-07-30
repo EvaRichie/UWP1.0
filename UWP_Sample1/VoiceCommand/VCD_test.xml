@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="SampleTest_en-us">
+    <AppName>Sample App</AppName>
+    <Example>What can i said</Example>
+
+    <Command Name="NavigationToMainPage">
+      <Example>Sample app open first page</Example>
+      <ListenFor RequireAppName="BeforePhrase">Navigation to {Pages}</ListenFor>
+      <Feedback>Trying to navigate to {Pages}</Feedback>
+      <Navigate/>
+    </Command>
+
+    <PhraseList Label="Pages">
+      <Item>MainPage</Item>
+    </PhraseList>
+  </CommandSet>
+</VoiceCommands>

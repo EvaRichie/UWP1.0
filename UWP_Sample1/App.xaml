@@ -1,0 +1,12 @@
+﻿<Application
+    x:Class="UWP_Sample1.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWP_Sample1"
+    xmlns:vm="using:UWP_Sample1.ViewModel"
+    RequestedTheme="Light">
+
+    <Application.Resources>
+        <vm:MainPageViewModel x:Key="MainPageVM"/>
+    </Application.Resources>
+</Application>
