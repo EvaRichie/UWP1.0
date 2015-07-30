@@ -15,8 +15,8 @@ namespace UWP_Sample1RC.BackgroundTasks
         {
             taskInstance.Canceled += TaskInstance_Canceled;
 #if DEBUG
-            //ShowToast("WTF");
-            ShowAdaptiveToast();
+            ShowToast("WTF");
+            //ShowAdaptiveToast();
 #endif
         }
 
@@ -45,8 +45,8 @@ namespace UWP_Sample1RC.BackgroundTasks
                     template = AdapiveToastBindingEnum.ToastGeneric,
                     ChildElements = new IChildElement[]
                     {
-                        new ToastTextElement() { text="title" },
-                        new ToastTextElement() { text="content" },
+                        new ToastTextElement() { text = "Title text" },
+                        new ToastTextElement() { text = "Content text" },
                         new ToastImageElement() { imageSource = "ms-appx:///Assets/Logo.png", placement= AdaptiveToastImagePlacementEnum.appLogoOverride, hintCrop = AdaptiveToastCropEnum.circle },
                         new ToastImageElement() { imageSource = "ms-appx:///Assets/IC716666.png", placement= AdaptiveToastImagePlacementEnum.inline, hintCrop = AdaptiveToastCropEnum.none, IsAddImageQuery = false, alt = "override" }
                     },

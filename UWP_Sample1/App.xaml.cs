@@ -4,8 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UWP_Sample1.View;
+using UWP_Sample1RC.BackgroundTasks;
+using UWP_Sample1RC.Helpers;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -32,6 +35,60 @@ namespace UWP_Sample1
             Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.Resuming += OnResuming;
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            if (args is VoiceCommandActivatedEventArgs)
+            {
+                var vCmdArgs = (VoiceCommandActivatedEventArgs)args;
+                var navigationStr = string.Empty;
+                if (vCmdArgs.Result.Confidence == Windows.Media.SpeechRecognition.SpeechRecognitionConfidence.High)
+                {
+                    switch (vCmdArgs.Result.RulePath[0])
+                    {
+                        case "NavigationToMainPage":
+                            navigationStr = string.Format("Naivagate from VCD");
+                            break;
+                    }
+                }
+                var rootFrame = Window.Current.Content as Frame;
+                if (rootFrame == null)
+                {
+                    // Create a Frame to act as the navigation context and navigate to the first page
+                    rootFrame = new Frame();
+
+                    rootFrame.NavigationFailed += OnNavigationFailed;
+
+                    // Place the frame in the current Window
+                    Window.Current.Content = rootFrame;
+                }
+                else
+                {
+                    if (!rootFrame.Navigate(typeof(MainPage), navigationStr))
+                    {
+                        throw new Exception("Navigation from VCD Error!!");
+                    }
+                }
+
+                if (rootFrame.Content == null)
+                {
+                    // When the navigation stack isn't restored navigate to the first page,
+                    // configuring the new page by passing required information as a navigation
+                    // parameter
+                    rootFrame.Navigate(typeof(MainPage), navigationStr);
+                }
+                Window.Current.Activate();
+            }
+            if (args is ToastNotificationActivatedEventArgs)
+            {
+                var toastArgs = (ToastNotificationActivatedEventArgs)args;
+                var toastArgument = toastArgs.Argument;
+                System.Diagnostics.Debug.WriteLine(toastArgs.UserInput.Count);
+                var toastInput = toastArgs.UserInput.FirstOrDefault();
+            }
+            base.OnActivated(args);
         }
 
         /// <summary>
@@ -39,7 +96,7 @@ namespace UWP_Sample1
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
 
 #if DEBUG
@@ -48,6 +105,7 @@ namespace UWP_Sample1
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
+            await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommand/VCD_test.xml")));
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -78,6 +136,9 @@ namespace UWP_Sample1
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            //RegistrationBackgroundTaskHelper.RegisterBackgroundTasks("SimpleBackgroundTask", typeof(BackgroundToastTask), new ToastNotificationActionTrigger());
+            RegistrationBackgroundTaskHelper.RegisterBackgroundTasks("SimpleTimerTask", typeof(TimerTask), new TimeTrigger(15, false));
         }
 
         /// <summary>
@@ -102,6 +163,11 @@ namespace UWP_Sample1
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        private void OnResuming(object sender, object e)
+        {
+
         }
     }
 }
