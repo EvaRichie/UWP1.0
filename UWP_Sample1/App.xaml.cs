@@ -32,7 +32,7 @@ namespace UWP_Sample1
         /// </summary>
         public App()
         {
-            Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync();
+            //Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.Resuming += OnResuming;
