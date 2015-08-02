@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UWP_Sample1RC.Helpers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -27,6 +28,24 @@ namespace UWP_Sample1.View
         public AdaptiveShellPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = base.Frame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested += new EventHandler<BackRequestedEventArgs>(BackRequestHandler);
+            base.OnNavigatedTo(e);
+        }
+
+        private void BackRequestHandler(object sender, BackRequestedEventArgs e)
+        {
+            base.Frame.GoBack();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().BackRequested -= BackRequestHandler;
+            base.OnNavigatedFrom(e);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

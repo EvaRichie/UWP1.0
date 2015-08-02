@@ -32,7 +32,8 @@ namespace UWP_Sample1RC.BackgroundTasks
             var toastTextElements = toastXml.GetElementsByTagName("text");
             toastTextElements[0].AppendChild(toastXml.CreateTextNode(toastMessage));
             var toast = new ToastNotification(toastXml);
-            ToastNotificationManager.CreateToastNotifier().Show(toast);
+            //ToastNotificationManager.CreateToastNotifier().Show(toast);
+            ToastNotificationManager.CreateToastNotifier("App").Show(toast);
         }
 
         private void ShowAdaptiveToast()

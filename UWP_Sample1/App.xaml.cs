@@ -137,7 +137,7 @@ namespace UWP_Sample1
             // Ensure the current window is active
             Window.Current.Activate();
 
-            //RegistrationBackgroundTaskHelper.RegisterBackgroundTasks("SimpleBackgroundTask", typeof(BackgroundToastTask), new ToastNotificationActionTrigger());
+            RegistrationBackgroundTaskHelper.RegisterBackgroundTasks("SimpleBackgroundTask", typeof(BackgroundToastTask), new ToastNotificationActionTrigger("APP"));
             RegistrationBackgroundTaskHelper.RegisterBackgroundTasks("SimpleTimerTask", typeof(TimerTask), new TimeTrigger(15, false));
         }
 

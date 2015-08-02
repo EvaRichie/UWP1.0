@@ -114,9 +114,11 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundTasks\BackgroundToastTask.cs" />
     <Compile Include="BackgroundTasks\TimerTask.cs" />
     <Compile Include="Helpers\AdaptiveShellHelper.cs" />
     <Compile Include="Helpers\RegistrationBackgroundTaskHelper.cs" />
+    <Compile Include="Helpers\WindowsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -8,6 +8,7 @@ using UWP_Sample1.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -42,20 +43,41 @@ namespace UWP_Sample1.View
             }
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = base.Frame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested += new EventHandler<BackRequestedEventArgs>(BackRequestHandler);
+            System.Diagnostics.Debug.WriteLine(base.Frame.GetNavigationState());
+            base.OnNavigatedTo(e);
+        }
+
+        private void BackRequestHandler(object sender, BackRequestedEventArgs e)
+        {
+            Frame.GoBack();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().BackRequested -= BackRequestHandler;
+            
+            base.OnNavigatedFrom(e);
+        }
+
         private void ListViewItemTapped(object sender, TappedRoutedEventArgs e)
         {
             var item = (sender as ListViewItem).DataContext as PageModel;
-            switch (item.NavigatePageType.Name)
-            {
-                case "AdaptiveShellPage":
-                    this.MainPageView.Content = new AdaptiveShellPage();
-                    break;
-                case "DownloadProgressPage":
-                    this.MainPageView.Content = new DownloadProgressPage();
-                    break;
+            Frame.Navigate(item.NavigatePageType);
+            //switch (item.NavigatePageType.Name)
+            //{
+            //    case "AdaptiveShellPage":
+            //        this.MainPageView.Content = new AdaptiveShellPage();
+            //        break;
+            //    case "DownloadProgressPage":
+            //        this.MainPageView.Content = new DownloadProgressPage();
+            //        break;
 
-            }
-            this.MainPageView.IsPaneOpen = false;
+            //}
+            //this.MainPageView.IsPaneOpen = false;
         }
     }
 }
